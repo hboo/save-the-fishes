@@ -1,7 +1,7 @@
 import os
 from sklearn.datasets import load_files
 from keras import applications
-from keras.utils import np_utils
+from keras.utils import to_categorical
 from keras.layers import Conv2D, MaxPooling2D, GlobalAveragePooling2D
 from keras.callbacks import ModelCheckpoint
 from keras.layers import Dropout, Flatten, Dense
@@ -16,8 +16,8 @@ import PIL
 from model import *
 
 fish_names = None
-PATH_TO_TRAIN = '../fishImages_mock/train/'
-PATH_TO_VALIDATE = '../fishImages_mock/valid/'
+PATH_TO_TRAIN = '../static/fishes/train'
+PATH_TO_VALIDATE = '../static/fishes/valid'
 
 def count_num_classes(path):
 	files = folders = 0
@@ -35,15 +35,15 @@ def path_to_tensor(img_path):
 	return np.expand_dims(x, axis=0)
 
 def paths_to_tensor(img_paths):
-	list_of_tensors = [path_to_tensor(img_path) for img_path in tqdm(img_paths)]
+	list_of_tensors = [path_to_tensor(img_path) for img_path in tqdm(img_paths) if '.txt' not in img_path]
 	return np.vstack(list_of_tensors)
 
 def load_dataset(path):
-	NUM_FAMILIES = count_num_classes(PATH_TO_TRAIN)
+	num_classes = count_num_classes(PATH_TO_TRAIN)
 	data = load_files(path)
 	fish_files = np.array(data['filenames'])
-	fish_targets = np_utils.to_categorical(np.array(data['target']), NUM_FAMILIES)
-
+	fish_targets = to_categorical(data['target'], num_classes)
+	#import pdb;pdb.set_trace()
 	return fish_files, fish_targets
 
 def augment_dataset():
