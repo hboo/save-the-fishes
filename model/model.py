@@ -4,7 +4,7 @@ from keras import applications
 from keras.utils import np_utils
 from keras.layers import Conv2D, MaxPooling2D, GlobalAveragePooling2D
 from keras.layers import Dropout, Flatten, Dense
-from keras.models import Sequential
+from keras.models import Model
 from keras.preprocessing import image
 from tqdm import tqdm
 import numpy as np
@@ -20,18 +20,14 @@ def build_model():
 	#for layer in base_model:
 		#Freeze imagenet trained layers
 	#	layer.trainable = False
-	top_model = Sequential()
-	top_model.add(Flatten(input_shape=base_model.output_shape[1:]))
-	top_model.add(Dense(256, activation='relu'))
-	top_model.add(Dropout(0.5))
-	top_model.add(Dense(1, activation='sigmoid'))
+	last = base_model.output
+	top_model = Flatten()(last)
+	top_model = Dense(256, activation='relu')(top_model)
+	top_model = Dense(1, activation='sigmoid')(top_model)
 
-	# stick them together
-	base_model.add(top_model)
-	return base_model
+	model = Model(base_model.input, top_model)
 
-
-
+	return model
 
 if __name__ == '__main__':
 	build_model()
