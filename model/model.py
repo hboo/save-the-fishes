@@ -14,7 +14,7 @@ def build_model(num_classes):
 	top_model = Flatten()(vgg16_model.output)
 	top_model = Dense(256, activation='relu')(top_model)
 	top_model = Dropout(0.5)(top_model)
-	top_model = Dense(num_classes, activation='sigmoid')(top_model)
+	top_model = Dense(num_classes, activation='softmax')(top_model)
 
 	# Build a model made up of top_model stuck to the end of vgg16_model
 	model = Model(vgg16_model.input, top_model)
