@@ -1,10 +1,23 @@
 from glob import glob
-
+import argparse
 from model import *
+from train import path_to_tensor
+import numpy as np
 
-def predict():
-	fish_names = [item[20:-1] for item in sorted(glob("../static/fishes/train/*/"))]
-	print(fish_names)
-	model = build_model()
-	model.load_weights('saved_models/weights.best.from_scratch.hdf5')
+parser = argparse.ArgumentParser(description='Learn some fish')
+parser.add_argument('image')
+args = parser.parse_args()
+
+def predict(image):
+	model = build_model(15)
+	model.load_weights('saved_models/weights.best.from_scratch_2.hdf5')
+	tensor = path_to_tensor(image).astype('float32')/255
+	prediction = model.predict(tensor)
+	res = np.argmax(prediction)
+
+	print(prediction)
+	print(res)
+
+if __name__ == '__main__':
+	predict(args.image)
 
