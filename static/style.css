@@ -1,0 +1,92 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.drop-fish-container {
+}
+
+.fish-img {
+  width: 100%;
+}
+
+.drop-fish-img {
+  width: 100%;
+  height: 20vh;
+  border: 1px black solid;
+}
+
+.app-container {
+  margin-left: 30vw;
+  margin-right: 30vw;
+  width: 40vw;
+}
+
+.header {
+  text-align: center;
+}
+
+.fish-form {
+  margin-top: 3%;
+}
+
+.fish-form * {
+  text-align: center;
+}
+
+.fish-form-input-size {
+  text-align: center;
+  width: 70%;
+  height: 2em;
+  margin-left: 3%;
+}
+
+.fish-form-label-size {
+  text-align: center;
+
+}
+
+.fish-form-input-loc {
+  text-align: center;
+  width: 70%;
+  height: 2em;
+  margin-left: 4.5%;
+}
+
+.fish-form-label-loc {
+  text-align: center;
+}
+
+.fish-form-btn {
+  width: 100%;
+  margin-top: 4%;
+  height: 3em;
+  background: royalblue;
+  font-size: 1em;
+  border: none;
+}
+
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+
+.clearfix {
+    display: block;
+}
+
+.species-container {
+  padding: 0 10vw;
+  background-color: white;
+  height: 3em;
+}
+
+.species-text {
+  text-align: center;
+  font-size: 1.3em;
+  padding-top: 0.5em;
+  padding-bottom: 0.2em;
+}

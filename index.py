@@ -1,10 +1,10 @@
 from flask import Flask, flash, redirect, render_template, request, session, abort
 
 app = Flask(__name__)
- 
+
 @app.route("/")
 def index():
-  return 'Hello'
- 
+  return render_template("index.html", name=app)
+
 if __name__ == "__main__":
     app.run()
