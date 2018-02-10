@@ -66,7 +66,7 @@ def train_model():
 	# fit with a checkpointer which saves the best performing model under filepath
 	checkpointer = ModelCheckpoint(filepath='saved_models/weights.best.from_scratch.hdf5', 
 	                               verbose=1, save_best_only=True)
-	epochs = 5
+	epochs = 2
 	model.fit(train_tensors, train_targets, 
 	          validation_data=(valid_tensors, valid_targets),
 	          epochs=epochs, batch_size=20, callbacks=[checkpointer], verbose=1)
