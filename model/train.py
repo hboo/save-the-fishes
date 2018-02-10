@@ -16,8 +16,8 @@ import PIL
 from model import *
 
 fish_names = None
-PATH_TO_TRAIN = '../static/fishes/train'
-PATH_TO_VALIDATE = '../static/fishes/valid'
+PATH_TO_TRAIN = '../static/fishes/train/'
+PATH_TO_VALIDATE = '../static/fishes/validate/'
 
 def count_num_classes(path):
 	files = folders = 0
@@ -43,7 +43,6 @@ def load_dataset(path):
 	data = load_files(path)
 	fish_files = np.array(data['filenames'])
 	fish_targets = to_categorical(data['target'], num_classes)
-	#import pdb;pdb.set_trace()
 	return fish_files, fish_targets
 
 def augment_dataset():
@@ -55,7 +54,6 @@ def train_model():
 	# load the train, test, and validation datasets
 	train_files, train_targets = load_dataset(PATH_TO_TRAIN)
 	valid_files, valid_targets = load_dataset(PATH_TO_VALIDATE)
-	import pdb;pdb.set_trace()
 
 	# convert images to 4D tensor
 	train_tensors = paths_to_tensor(train_files).astype('float32')/255
