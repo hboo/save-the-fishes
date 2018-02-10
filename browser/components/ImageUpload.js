@@ -36,7 +36,7 @@ export default class extends React.Component {
       if (response.body.secure_url !== '') {
         this.setState({
           uploadedFileCloudinaryUrl: response.body.secure_url
-        }, () => console.log('STATE', this.state))
+        }, () => this.props.handleFormSumbit(this.state))
       }
     })
   }
@@ -46,7 +46,7 @@ export default class extends React.Component {
       <div>
         {
           this.state.uploadedFileCloudinaryUrl.length
-            ? <img src={this.state.uploadedFileCloudinaryUrl} />
+            ? <img className='fish-img' src={this.state.uploadedFileCloudinaryUrl} />
             : <FileDrop className='drop-fish-img' frame={document} onDrop={this.onImageDrop}>
                   Drop your fish image here
               </FileDrop>
