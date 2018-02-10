@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import AppContainer from './containers/AppContainer'
 
 ReactDOM.render(
-  <p>Hello Fishackathon!</p>,
+  <AppContainer />,
   document.getElementById('app')
 )
