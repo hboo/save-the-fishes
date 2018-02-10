@@ -1,5 +1,6 @@
 
 from sklearn.datasets import load_files
+from keras import applications
 from keras.utils import np_utils
 from keras.layers import Conv2D, MaxPooling2D, GlobalAveragePooling2D
 from keras.layers import Dropout, Flatten, Dense
@@ -8,38 +9,30 @@ from keras.preprocessing import image
 from tqdm import tqdm
 import numpy as np
 from glob import glob
+import h5py 
 
-#python -m pip install --upgrade https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-0.12.0-py2-none-any.whl
-
-
-def path_to_tensor(img_path):
-    # loads RGB image as PIL.Image.Image type
-    img = image.load_img(img_path, target_size=(224, 224))
-    # convert PIL.Image.Image type to 3D tensor with shape (224, 224, 3)
-    x = image.img_to_array(img)
-    # convert 3D tensor to 4D tensor with shape (1, 224, 224, 3) and return 4D tensor
-    return np.expand_dims(x, axis=0)
-
-def paths_to_tensor(img_paths):
-    list_of_tensors = [path_to_tensor(img_path) for img_path in tqdm(img_paths)]
-    return np.vstack(list_of_tensors)
-
-def process_data():
-	# pre-process the data for Keras
-	train_tensors=None
-	valid_tensors=None
-	test_tensors=None
-	
-	train_tensors = paths_to_tensor(train_files).astype('float32')/255
-	valid_tensors = paths_to_tensor(valid_files).astype('float32')/255
-	test_tensors = paths_to_tensor(test_files).astype('float32')/255
 
 def build_model():
-	model = Sequential()
-	# TODO: add layers
-	return model
+	# Use VGG16 model trained on Image Net and finetune the top layer
+	base_model = applications.VGG16(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
+	print('Model loaded')
+	import pdb;pdb.set_trace()
+	#for layer in base_model:
+		#Freeze imagenet trained layers
+	#	layer.trainable = False
+	top_model = Sequential()
+	top_model.add(Flatten(input_shape=base_model.output_shape[1:]))
+	top_model.add(Dense(256, activation='relu'))
+	top_model.add(Dropout(0.5))
+	top_model.add(Dense(1, activation='sigmoid'))
 
-def fit_model():
-	model = build_model()
+	# stick them together
+	base_model.add(top_model)
+	return base_model
 
-	model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+
+
+
+if __name__ == '__main__':
+	build_model()
+
