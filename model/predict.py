@@ -8,15 +8,18 @@ parser = argparse.ArgumentParser(description='Learn some fish')
 parser.add_argument('image')
 args = parser.parse_args()
 
+def get_fish_name(index):
+	path = '../static/fishes/train/*/'
+	fish_names = [x.split('/')[-1].replace('train', '').replace('\\', '') for x in glob(path)]
+	return fish_names[index]
+
 def predict(image):
 	model = build_model(15)
 	model.load_weights('saved_models/weights.best.from_scratch_2.hdf5')
 	tensor = path_to_tensor(image).astype('float32')/255
-	prediction = model.predict(tensor)
-	res = np.argmax(prediction)
+	res = np.argmax(model.predict(tensor))
 
-	print(prediction)
-	print(res)
+	print(get_fish_name(res))
 
 if __name__ == '__main__':
 	predict(args.image)
