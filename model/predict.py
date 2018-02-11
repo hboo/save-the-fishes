@@ -4,6 +4,8 @@ from model import *
 from train import path_to_tensor
 import numpy as np
 
+from fish_info import FISH_INFO
+
 parser = argparse.ArgumentParser(description='Learn some fish')
 parser.add_argument('image')
 args = parser.parse_args()
@@ -19,7 +21,9 @@ def predict(image):
 	tensor = path_to_tensor(image).astype('float32')/255
 	res = np.argmax(model.predict(tensor))
 
-	print(get_fish_name(res))
+	name = get_fish_name(res) 
+	print(name)
+	print(FISH_INFO[name])
 
 if __name__ == '__main__':
 	predict(args.image)
